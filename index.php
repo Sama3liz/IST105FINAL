@@ -1,6 +1,16 @@
 <?php
 if (isset($_GET['items'])) {
-    header("Location: process.php?items=" . urlencode($_GET['items']));
+    // Collect all selected items into an array
+    $items = $_GET['items'];
+
+    // Convert the array of selected items into a comma-separated string
+    $items_str = implode(",", $items);
+
+    // Send the selected items as a query parameter to the Python Flask server
+    $response = file_get_contents("http://127.0.0.1:5000/?items=" . urlencode($items_str));
+
+    // Display the response from the Python script (processed party code and message)
+    echo $response;
     exit;
 }
 ?>
@@ -29,7 +39,7 @@ if (isset($_GET['items'])) {
         #CCTB #DigitalPartyPlanner #TechMeetsFun
     </p>
     <h2 class="mb-3">Select Party Items</h2>
-    <form action="index.php" method="get" class="mb-3">
+    <form action="process.php" method="get" class="mb-3">
         <div class="mb-3">
             <h5>Choose items:</h5>
             <div class="form-check">
