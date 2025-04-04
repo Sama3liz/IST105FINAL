@@ -1,14 +1,9 @@
 <?php
 if (isset($_GET['items'])) {
     $items = $_GET['items'];
-
-    // Convert the array of selected items into a comma-separated string
     $items_str = implode(",", $items);
-
-    // Send the selected items as a query parameter to the Python Flask server
     $response = file_get_contents("http://127.0.0.1:5000/?items=" . urlencode($items_str));
 
-    // Display result
     echo "<!DOCTYPE html>
     <html lang='en'>
     <head>
@@ -24,7 +19,6 @@ if (isset($_GET['items'])) {
     </body>
     </html>";
 } else {
-    // Redirect back if accessed without form submission
     header("Location: index.php");
     exit;
 }
